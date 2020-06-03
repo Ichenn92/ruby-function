@@ -58,24 +58,52 @@ class LinkedList
     end
   end
 
-  def contains
-    # returns true if the passed in value is in the list and otherwise returns false.
+  def contains(value)
+	(0...self.size).each {|index| return true if self.at(index) == value}
+	return false
   end
 
   def find(value)
+	(0...self.size).each {|index| return index if self.at(index) == value}
+	return nil
     # returns the index of the node containing value, or nil if not found.
   end
 
   def to_s
+	string = ""
+	(0...self.size).each{ |index| string += "#{self.at(index)} -> "}
+	string += "nil"
     # represent your LinkedList objects as strings, so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> nil
   end
 
   def insert_at(value, index)
-    #insert_at(value, index) that inserts the node with the provided value at the given index
+	if (0...self.size).include?(index)
+	  existing_node = self.at(index)
+	  new_node = Node.new(value)
+	  new_node.next_node = existing_node.next_node
+	  existing_node.next_node = new_node
+	  if index == 0
+	    @head = new_node
+	  elsif index == self.size - 1
+	    @tail = new_node
+	  end
+	else
+	  return nil
+	end
   end
 
   def remove_at(index)
-    #remove_at(index) that removes the node at the given index. (You will need to update the links of your nodes in the list when you remove a node.)
+	if index == 0
+		@head = self.at(1)
+		self.at(0).next_node = nil
+	elsif (1...self.size).include?(index)
+	  existing_node = self.at(index)
+	  left_node = self.at(index - 1)
+	  left_node.next_node = existing_node.next_node
+	  existing_node.next_node = nil
+	else
+	  return nil
+	end
   end
 end
 
