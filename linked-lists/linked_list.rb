@@ -1,3 +1,5 @@
+require 'pry'
+
 class LinkedList
   attr_reader :head, :tail
 
@@ -52,31 +54,33 @@ class LinkedList
       return nil
     when 1
       @head, @tail = nil, nil
-    else 
+    else
       previous_node = @tail
       pop = self.at(self.size - 2)
       pop.next_node = nil
       @tail = pop
-      previous_node      
+      previous_node
     end
   end
 
   def contains?(value)
-	(0...self.size).each {|index| return true if self.at(index).value == value}
-	return false
+    (0...self.size).each do |index|
+      return true if self.at(index).value == value
+    end
+    return false
   end
 
   def find(value)
-	(0...self.size).each {|index| return index if self.at(index).value == value}
-	return nil
-    # returns the index of the node containing value, or nil if not found.
+    (0...self.size).each do |index|
+      return index if self.at(index).value == value
+    end
+    return nil
   end
 
   def to_s
-	string = ""
-	(0...self.size).each{ |index| string += "#{self.at(index).value} -> "}
-	string += "nil"
-    # represent your LinkedList objects as strings, so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> nil
+    string = ''
+    (0...self.size).each { |index| string += "#{self.at(index).value} -> " }
+    string += 'nil'
   end
 
   def insert_at(value, index)
@@ -95,22 +99,21 @@ class LinkedList
         left_node.next_node = new_node
         new_node.next_node = right_node
       end
-  	else
-	    return nil
-	  end
+    else
+      return nil
+    end
   end
 
   def remove_at(index)
-	  if index == 0
-	  	@head = self.at(1)
-	  	self.at(0).next_node = nil
-	  elsif (1...self.size).include?(index)
-	    existing_node = self.at(index)
-	    left_node = self.at(index - 1)
-	    left_node.next_node = existing_node.next_node
-	    existing_node.next_node = nil
-	  else
-	    return nil
+    if index == 0
+      @head = self.at(1)
+    elsif (1...self.size).include?(index)
+      existing_node = self.at(index)
+      left_node = self.at(index - 1)
+      left_node.next_node = existing_node.next_node
+      existing_node.next_node = nil
+    else
+      return nil
     end
   end
 end
