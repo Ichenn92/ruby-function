@@ -61,7 +61,6 @@ class Tree
   end
 
   def find_parent_rec(value, node = @root)
-    puts "#{value} = #{node.value} ?"
     value_left_child = node.left_child.nil? ? nil : node.left_child.value
     value_right_child = node.right_child.nil? ? nil : node.right_child.value
 
@@ -72,5 +71,23 @@ class Tree
     elsif value > node.value
       value_right_child.nil? ? nil : find_parent_rec(value, node.right_child)
     end
+  end
+  
+  def level_order(queue = [@root])
+	  until queue.empty?
+	    yield(queue[0].value) if block_given?
+	    next_node = queue.pop
+	    queue.push(next_node.left_child) unless next_node.left_child.nil?
+	    queue.push(next_node.right_child) unless next_node.right_child.nil?
+	  end
+  end
+  
+  def level_order_rec(queue = [@root])
+	  queue_child = []
+	  queue.each do |node| yield(node.value)
+	    queue_child.push(next_node.left_child) unless next_node.left_child.nil?
+	    queue_child.push(next_node.right_child) unless next_node.right_child.nil?
+	  end
+	  level_order_rec queue_child unless queue_child.empty?
   end
 end
