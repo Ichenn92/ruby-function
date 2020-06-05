@@ -35,35 +35,13 @@ class Tree
     end
 
     if node.left_child.nil?
-      return @parent_pointer = node.right_child
+      return parent_pointer = node.right_child
     elsif node.right_child.nil?
-      return @parent_pointer = node.left_child
+      return parent_pointer = node.left_child
     else
-      @parent_pointer = node.left_child
-      compare(node.left_child, node.right_child)
+      parent_pointer = node.left_child
+      compare(parent_pointer, node.right_child)
     end
-    # unless node == @root
-    #   parent = find_parent(value)
-    #   parent_pointer =
-    #     value < parent.value ? parent.left_child : parent.right_child
-    #   if node.left_child.nil?
-    #     return parent_pointer = node.right_child
-    #   elsif node.right_child.nil?
-    #     return parent_pointer = node.left_child
-    #   else
-    #     parent_pointer = node.left_child
-    #     compare(node.left_child, node.right_child)
-    #   end
-    # else
-    #   if node.left_child.nil?
-    #     return @root = node.right_child
-    #   elsif node.right_child.nil?
-    #     return @root = node.left_child
-    #   else
-    #     @root = node.left_child
-    #     compare(node.left_child, node.right_child)
-    #   end
-    # end
   end
 
   def find(value, node = @root)
