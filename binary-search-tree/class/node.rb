@@ -1,3 +1,13 @@
+class Node
+  attr_accessor :value, :left_child, :right_child
+
+  def initialize(value)
+    @value = value
+    @left_child = nil
+    @right_child = nil
+  end
+end
+
 module Comparable
   def compare(node_A, node_B)
     puts "A = #{node_A.value} et B = #{node_B.value}"
@@ -16,15 +26,5 @@ module Comparable
         compare(node_A.right_child, node_B)
       end
     end
-  end
-end
-
-class Node
-  attr_accessor :value, :left_child, :right_child
-
-  def initialize(value)
-    @value = value
-    @left_child = nil
-    @right_child = nil
   end
 end
