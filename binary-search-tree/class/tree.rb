@@ -72,22 +72,26 @@ class Tree
       value_right_child.nil? ? nil : find_parent_rec(value, node.right_child)
     end
   end
-  
+
   def level_order(queue = [@root])
-	  until queue.empty?
-	    yield(queue[0].value) if block_given?
-	    next_node = queue.pop
-	    queue.push(next_node.left_child) unless next_node.left_child.nil?
-	    queue.push(next_node.right_child) unless next_node.right_child.nil?
-	  end
+    until queue.empty?
+      yield(queue.map(&:value)) if block_given?
+      (0...queue.count).each do
+        next_node = queue.shift
+        queue.push(next_node.left_child) unless next_node.left_child.nil?
+        queue.push(next_node.right_child) unless next_node.right_child.nil?
+      end
+    end
   end
-  
-  def level_order_rec(queue = [@root])
-	  queue_child = []
-	  queue.each do |node| yield(node.value)
-	    queue_child.push(next_node.left_child) unless next_node.left_child.nil?
-	    queue_child.push(next_node.right_child) unless next_node.right_child.nil?
-	  end
-	  level_order_rec queue_child unless queue_child.empty?
+
+  def level_order_rec(queue = [@root], &block)
+    queue_child = []
+    block.call(queue.map(&:value)) if block_given?
+
+    queue.each do |node|
+      queue_child.push(node.left_child) unless node.left_child.nil?
+      queue_child.push(node.right_child) unless node.right_child.nil?
+    end
+    level_order_rec(queue_child, &block) unless queue_child.empty?
   end
 end
